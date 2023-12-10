@@ -1,5 +1,4 @@
 import numpy as np
-from mpi4py import MPI
 
 #Cria uma sequência de 2^n números, no intervalo de [1, 1000) 
 def create_sequence(n):
@@ -14,8 +13,8 @@ def DFT(seq):
     else:
         #Computa recursivamente as sequências pares e ímpares
         N = len(seq)
-        G = DFT(seq[::2])
-        H = DFT(seq[1::2])
+        G = DFT(seq[::2]) #Seleciona os termos pares
+        H = DFT(seq[1::2]) #Seleciona os termos ímpares
         W = np.exp(-2j*np.pi*np.arange(0, N/2)/N)
         WH = W*H
 
@@ -25,17 +24,6 @@ def DFT(seq):
 
 if __name__ == "__main__":
 
-    #Inicializa o comunicador do MPI
-    # comm = MPI.COMM_WORLD 
-
-    # #Obtém o número do processo atual
-    # rank = comm.Get_rank()
-
-    # if rank == 0:
-    #     pass
-    # else: 
-    #     pass
-
-    print(DFT([8,7,6,5, 4, 3, 2, 1]))
+    print(DFT([1, -1, 1, -1, 5, 4, 3, 2]))
 
 

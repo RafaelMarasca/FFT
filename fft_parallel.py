@@ -14,8 +14,8 @@ def DFT(seq):
     else:
         #Computa recursivamente as sequências pares e ímpares
         N = len(seq)
-        G = DFT(seq[::2])
-        H = DFT(seq[1::2])
+        G = DFT(seq[::2]) #Seleciona os termos pares
+        H = DFT(seq[1::2]) #Seleciona os termos ímpares 
         W = np.exp(-2j*np.pi*np.arange(0, N/2)/N)
         WH = W*H
 
