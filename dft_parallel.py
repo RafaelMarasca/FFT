@@ -24,26 +24,6 @@ def dft(x, K):
 
     return X
 
-
-#Calcula a FFT da sequência
-def fft(x):
-
-    if len(x) == 1:
-        return x
-    else:
-        #Computa recursivamente as sequências pares e ímpares
-        N = len(x)
-
-        G = fft(x[::2]) #Seleciona os termos pares
-        H = fft(x[1::2]) #Seleciona os termos ímpares
-
-        #Gera os vetores de exponencial
-        W = np.exp(-2j*np.pi*np.arange(0, N/2)/N)
-        WH = W*H
-
-        return np.concatenate((G + WH, G - WH)) #Concatena e retorna os resultados
-
-
 if __name__ == "__main__":
 
     #Inicializa o comunicador do MPI
@@ -99,14 +79,6 @@ if __name__ == "__main__":
         X = dft(x, K)
         t2 = MPI.Wtime()
         print("Versão Serial:")
-        print(X)
-        print(t2 - t1)
-        print("-----------------------------------")
-
-        t1 = MPI.Wtime()
-        X = fft(x)
-        t2 = MPI.Wtime()
-        print("FFT:")
         print(X)
         print(t2 - t1)
         print("-----------------------------------")
